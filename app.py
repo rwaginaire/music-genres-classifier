@@ -4,8 +4,12 @@ import numpy as np
 import pickle
 
 # Charger le modèle
-with open('model.pkl', 'rb') as f:
-    model = pickle.load(f)
+@st.cache_resource
+def load_model():
+    with open('model.pkl', 'rb') as f:
+        return pickle.load(f)
+    
+model = load_model()
 
 def extract_features(file_path):
     audio, sr = librosa.load(file_path, duration=30)
